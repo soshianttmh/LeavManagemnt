@@ -11,9 +11,12 @@ using System.ComponentModel;
 using AutoMapper;
 using LeavManagemnt_.NET6.Repositories;
 using LeavManagemnt_.NET6.Contracts;
+using Microsoft.AspNetCore.Authorization;
+using LeavManagemnt_.NET6.Constants;
 
 namespace LeavManagemnt_.NET6.Controllers
 {
+    [Authorize(Roles = Roles.Adminastrator)]
     public class LeaveTypesController : Controller
     {
         private readonly ILeaveTypeRepository _leaveTypeRepository; 
