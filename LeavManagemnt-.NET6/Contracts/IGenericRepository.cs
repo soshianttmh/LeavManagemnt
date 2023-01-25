@@ -8,5 +8,7 @@
         Task DeleteAsync(int id);
         Task UpdateAsync(T entity);
         Task<T> AddAsync(T entity);
+
+        Task AddRangeAsync(List<T> entities);
     }
 }

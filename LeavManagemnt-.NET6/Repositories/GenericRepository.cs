@@ -53,5 +53,11 @@ namespace LeavManagemnt_.NET6.Repositories
             //context.Set<T>().Update(entity);
             await context.SaveChangesAsync();
         }
+
+        public async Task AddRangeAsync(List<T> entities)
+        {
+            await context.AddRangeAsync(entities);
+            context.SaveChanges();
+        }
     }
 }

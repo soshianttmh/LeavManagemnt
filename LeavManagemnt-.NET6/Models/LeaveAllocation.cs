@@ -10,6 +10,8 @@ namespace LeavManagemnt_.NET6.Models
         [ForeignKey("LeaveTypeId")]
         public LeaveType leaveType { get; set; }
         public int LeaveTypeId { get; set; }
-        public int EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
+
+        public int Period { get; set; }
     }
 }
