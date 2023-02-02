@@ -1,0 +1,118 @@
+﻿@model EmployeeLeaveRequestViewVM
+@{
+    ViewData["Title"] = "MyLeaves";
+}
+
+@if(TempData["CancleError"] != null){
+    <h1 class="text-danger">
+        @TempData["CancleError"]
+    </h1>
+    <hr />
+}
+<div class="card">
+    <div class="card-header">
+        Leave Allocations
+    </div>
+    <ul class="list-group list-group-flush">
+        @foreach (var allocation in Model.LeaveAllocationsVM)
+        {
+            <li class="list-group-item">
+                <h6>
+                    @allocation.LeaveType?.Name
+                    <button type="button" class="btn btn-primary">
+                        Allocated Days : <span class="badge text-bg-secondary">@allocation.LeaveType?.DefaultDays</span>
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        Remaning Days :  <span class="badge text-bg-secondary">@allocation.NumberOfDays</span>
+                    </button>
+                </h6>
+            </li>
+        }
+    </ul>
+</div>
+<br />
+<h2>Current Requests</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveRequests[0].LeaveType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveRequests[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveRequests[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveRequests[0].DateRequested)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveRequests[0].Approved)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LeaveRequests)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeaveType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateRequested)
+                </td>
+                <td>
+                    @if(item.Canceled){
+                        <span class="badge bg-secondary">Canceled</span>
+                    }else{
+                        if(item.Approved == null){
+                            <span class="badge bg-warning">Pending</span>
+                        }else if(item.Approved.Value){
+                            <span class="badge bg-success">Approved</span>
+                        }else if(!item.Approved.Value){
+                            <span class="badge bg-danger">Rejected</span>
+                        }
+                    }
+                </td>
+                <td>
+                    @if(item.Canceled == false){
+                        <button class="btn btn-danger cnacleBTN" data-id="@item.Id" >Cancle</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<form asp-action="Cancle" id="cancleForm">
+    <input type="hidden" name="id" id="requestId"/>
+</form>
+@section Scripts{
+    <script>
+        $(function () {
+            $('.cnacleBTN').click(function (e) {
+                swal({
+                    title: "Are You Sure?",
+                    text: "Are You Sure to Delete This record?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((confirm) => { 
+                    if(confirm){
+                        var btn = $(this);
+                        var value = btn.data("id");
+                        $("#requestId").val(value)
+                        $("#cancleForm").submit()
+                    }
+                })
+            });
+        });
+    </script>
+}

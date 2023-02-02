@@ -15,7 +15,7 @@ namespace LeavManagemnt_.NET6.Models
         [Display(Name = "Allocation Period")]
         public int Period { get; set; }
 
-
+        public string? Name { get; set; }
 
         public LeaveTypeVM? LeaveType { get; set; }
     }

@@ -96,5 +96,15 @@ namespace LeavManagemnt_.NET6.Repositories
             await UpdateAsync(leaveAllocation);
             return true;
         }
+
+        public async Task<LeaveAllocation?> GetEmployeeAllocation(int leaveTypeId, string employeeId)
+        {
+            var model = await _context.LeaveAllocations.FirstOrDefaultAsync(q => q.LeaveTypeId == leaveTypeId && q.EmployeeId == employeeId);
+            if (model == null)
+            {
+                return null;
+            }
+            return model;
+        }
     }
 }

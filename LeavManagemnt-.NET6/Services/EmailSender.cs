@@ -27,20 +27,17 @@ namespace LeavManagemnt_.NET6.Services
             };
             message.To.Add(new MailAddress(email));
 
+            // Using Blocks, Are used to replace Idisposible Interfaces.that they used for releasing managed or unmanaged resources.
             using (var client = new SmtpClient(_smtpServer, _smtpPort))
             {
                 client.Send(message);
             }
-            // Is like :
+
+
             //var client = new SmtpClient(_smtpServer,_smtpPort);
-            //try
-            //{
-            //    client.Send(message);
-            //}
-            //catch
-            //{
-            //    throw new Exception();
-            //}
+            //client.Send(message);
+            //client.Dispose();
+            
 
             return Task.CompletedTask;
         }

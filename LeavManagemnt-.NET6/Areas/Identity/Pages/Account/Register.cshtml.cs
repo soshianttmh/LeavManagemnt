@@ -113,7 +113,7 @@ namespace LeavManagemnt_.NET6.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
-                // its null set the Default value 
+                // if its null set the Default value 
                 user.DateOfBirth = Input.DateOfBirth ?? default;
                 user.DateJoined = Input.DateJoined ?? default;
 
